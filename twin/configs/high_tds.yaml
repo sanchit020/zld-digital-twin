@@ -1,0 +1,9 @@
+process:
+  feed_flow: 333
+  feed_tds: 35000
+  feed_temperature: 30
+
+health:
+  ro_fouling: 0.0
+  pump_wear: 0.0
+  px_efficiency: 0.96

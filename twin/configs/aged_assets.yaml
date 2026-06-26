@@ -1,0 +1,12 @@
+feed_flow: 333
+feed_tds: 25000
+feed_temperature: 30
+
+pump_pressure: 60
+
+px_enabled: true
+
+initial_conditions:
+  ro_fouling: 0.20
+  pump_wear: 0.10
+  px_efficiency: 0.90
