@@ -18,15 +18,15 @@ class PX(Asset):
         brine_flow = (state.assets.ro_brine_flow)
 
         brine_pressure = (state.assets.pump_pressure)
-        # print("DEBUG PX")
-
-        # print("Brine Flow:", brine_flow)
-
-        # print("Brine Pressure:", brine_pressure)
+        pressure_factor = (
+            brine_pressure
+            / 60
+        )
 
         recovered_power = (
             brine_flow
             * brine_pressure
+            * pressure_factor
             * state.health.px_efficiency
         )
         state.assets.px_recovered_power = (recovered_power)

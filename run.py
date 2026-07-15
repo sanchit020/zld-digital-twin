@@ -18,10 +18,8 @@ state = run_scenario(
     ticks=1000
 )
 
-# Create Influx writer
 writer = InfluxWriter()
 
-# Write final simulation state
 writer.write_state(state)
 
 print("\nSCENARIO REPORT")

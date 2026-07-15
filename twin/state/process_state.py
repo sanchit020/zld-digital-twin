@@ -8,3 +8,6 @@ class ProcessState:
 
     permeate_flow: float = 0.0
     brine_flow: float = 0.0
+
+    operating_pressure: float = 60.0
+    target_recovery: float = 0.45

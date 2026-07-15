@@ -1,6 +1,6 @@
-from influxdb_client import InfluxDBClient
-from influxdb_client import Point
+from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
+from datetime import datetime, timedelta
 
 
 class InfluxWriter:
@@ -19,10 +19,16 @@ class InfluxWriter:
 
         self.bucket = "plant_metrics"
 
+        # Start virtual simulation time
+        self.sim_time = datetime.utcnow()
+
     def write_state(self, state):
 
         point = (
             Point("plant_metrics")
+
+            # Give each point a unique timestamp
+            .time(self.sim_time)
 
             .field(
                 "pump_power",
@@ -80,3 +86,6 @@ class InfluxWriter:
             org="zld",
             record=point
         )
+
+        # Move simulation time forward by 1 second
+        self.sim_time += timedelta(seconds=1)

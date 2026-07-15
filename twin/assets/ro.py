@@ -17,12 +17,27 @@ class RO(Asset):
         feed_flow = state.process.feed_flow
 
         fouling_factor = (1.0 -state.health.ro_fouling)
-        tds_factor = (state.process.feed_tds/ 25000)
+        tds_factor = (state.process.feed_tds / 38000)
         required_pressure = (state.assets.pump_pressure*(1 +state.health.ro_fouling))
         state.assets.ro_required_pressure = (required_pressure)
+        pressure_factor = (
+            state.assets.pump_pressure
+            / 60
+        )
+
+        temperature_factor = (
+            1
+            + (
+                state.process.feed_temperature
+                - 25
+            ) * 0.01
+        )
+
         recovery = (
-        self.design_recovery
-        /tds_factor
+            self.design_recovery
+            * pressure_factor
+            * temperature_factor
+            / tds_factor
         )
         recovery*=fouling_factor
         recovery = max(
@@ -43,7 +58,17 @@ class RO(Asset):
         state.process.permeate_flow = permeate_flow
 
         state.process.brine_flow = brine_flow
-        state.health.ro_fouling += (0.05 * dt)
+        state.health.ro_fouling += (
+            0.02 * dt
+        )
+
+        if state.health.ro_fouling > 0.35:
+            print(
+                f"CIP cleaning triggered at "
+                f"{state.simulation.runtime_hours:.1f} h"
+            )
+
+            state.health.ro_fouling = 0.05
         state.health.ro_fouling = min(
         state.health.ro_fouling,
         0.5

@@ -70,7 +70,6 @@ def run_scenario(config_path, ticks=1000):
     kernel = SimulationKernel()
     clock = SimulationClock()
 
-    # Create Influx writer
     writer = InfluxWriter()
 
     for _ in range(ticks):
@@ -80,7 +79,6 @@ def run_scenario(config_path, ticks=1000):
             clock.dt_hours
         )
 
-        # Write every simulation tick to InfluxDB
         writer.write_state(state)
 
         if state.simulation.tick % 100 == 0:

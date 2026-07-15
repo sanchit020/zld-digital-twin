@@ -15,7 +15,7 @@ class Pump(Asset):
 
         flow = state.process.feed_flow
 
-        pressure = self.design_pressure
+        pressure = state.process.operating_pressure
         effective_efficiency = (self.efficiency*(1 -state.health.pump_wear))
         effective_efficiency = max(0.5,effective_efficiency)
         hydraulic_power = (
@@ -24,7 +24,6 @@ class Pump(Asset):
 
         state.assets.pump_pressure = pressure
         state.assets.pump_power = hydraulic_power
-        # hydraulic_power = (flow*pressure) / effective_efficiency
         state.assets.pump_efficiency = (effective_efficiency)
         state.health.pump_wear += (0.005 * dt)
         state.health.pump_wear = min(state.health.pump_wear,0.30)
