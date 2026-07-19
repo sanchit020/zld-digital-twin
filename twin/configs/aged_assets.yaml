@@ -1,12 +1,20 @@
-feed_flow: 333
-feed_tds: 25000
-feed_temperature: 30
+process:
+  feed_flow: 100.0
+  feed_tds: 38000.0
+  feed_temperature: 25.0
+  operating_pressure: 60.0
+  target_recovery: 0.45
 
-pump_pressure: 60
+assets:
+  pump_pressure: 60.0
+  px_enabled: true
 
-px_enabled: true
-
-initial_conditions:
-  ro_fouling: 0.20
+health:
+  ro_fouling: 0.15
   pump_wear: 0.10
   px_efficiency: 0.90
+
+zld:
+  enabled: true
+  water_recovery: 0.90
+  specific_energy: 20.0
